@@ -1,8 +1,10 @@
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import PageHero from './components/PageHero'
+import ClosingCTA from './components/ClosingCTA'
 import { ArrowUpRight, Check } from './components/Icons'
 import { Reveal, RevealGroup, RevealItem } from './components/ui/Reveal'
-import { process, processPage, projectsPath } from './lib/content'
+import { process, processPage } from './lib/content'
 import { photos, projectImages } from './lib/photos'
 
 const stepImages: Record<string, string> = {
@@ -20,62 +22,29 @@ export default function ProcessPage() {
 
       <main className="pt-[88px]">
         {/* Hero */}
-        <section className="relative min-h-[min(72vh,720px)] overflow-hidden border-b border-ink-line">
-          <img
-            src={projectImages.p4}
-            alt=""
-            aria-hidden
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 to-ink/50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/60" />
-          <div className="pointer-events-none absolute -right-24 top-1/4 h-80 w-80 rounded-full bg-gold/10 blur-[140px]" />
-
-          <div className="container-x relative z-10 flex min-h-[min(72vh,720px)] flex-col justify-center py-20 md:py-28">
-            <Reveal className="max-w-3xl">
-              <p className="eyebrow">
-                <span className="h-px w-8 bg-gold" />
-                {processPage.eyebrow}
-              </p>
-              <h1 className="heading-display mt-6 whitespace-pre-line text-4xl md:text-6xl lg:text-[4rem]">
-                {processPage.title}
-              </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-stone/90">
-                {processPage.heroLead}
-              </p>
-
-              <div className="mt-10 flex flex-wrap gap-3">
-                {[
-                  ['4', 'βήματα'],
-                  ['3D', 'σχεδιασμός'],
-                  ['Κλειδί', 'στο χέρι'],
-                ].map(([value, label]) => (
-                  <div
-                    key={label}
-                    className="rounded-[2px] border border-bone/10 bg-ink/45 px-5 py-3 backdrop-blur-sm"
-                  >
-                    <p className="font-display text-2xl text-bone">{value}</p>
-                    <p className="mt-0.5 text-xs uppercase tracking-wide2 text-stone">{label}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
-            <RevealGroup className="mt-12 flex flex-wrap gap-3">
-              {process.map((step) => (
-                <RevealItem key={step.id}>
-                  <a
-                    href={`#${step.id}`}
-                    className="group inline-flex items-center gap-2.5 rounded-full border border-bone/10 bg-ink/45 px-5 py-2.5 text-sm font-medium text-stone backdrop-blur-sm transition-all duration-300 hover:border-gold/60 hover:text-bone"
-                  >
-                    <span className="font-display text-gold">{step.n}</span>
-                    {step.title}
-                  </a>
-                </RevealItem>
-              ))}
-            </RevealGroup>
-          </div>
-        </section>
+        <PageHero
+          image={projectImages.p4}
+          eyebrow={processPage.eyebrow}
+          title={processPage.title}
+          lead={processPage.heroLead}
+          badges={[
+            ['4', 'βήματα'],
+            ['3D', 'σχεδιασμός'],
+            ['Κλειδί', 'στο χέρι'],
+          ]}
+        >
+          {process.map((step) => (
+            <RevealItem key={step.id}>
+              <a
+                href={`#${step.id}`}
+                className="group inline-flex items-center gap-2.5 rounded-full border border-bone/10 bg-ink/45 px-5 py-2.5 text-sm font-medium text-stone backdrop-blur-sm transition-all duration-300 hover:border-gold/60 hover:text-bone"
+              >
+                <span className="font-display text-gold">{step.n}</span>
+                {step.title}
+              </a>
+            </RevealItem>
+          ))}
+        </PageHero>
 
         {/* Overview */}
         <section className="border-b border-ink-line bg-ink-soft py-20 md:py-28">
@@ -115,12 +84,11 @@ export default function ProcessPage() {
         {/* Step details */}
         {process.map((step, i) => {
           const flip = i % 2 === 1
-          const soft = i % 2 === 1
           return (
             <section
               key={step.id}
               id={step.id}
-              className={`scroll-mt-24 border-b border-ink-line py-20 md:py-28 ${soft ? 'bg-ink-soft' : ''}`}
+              className={`scroll-mt-24 border-b border-ink-line py-20 md:py-28 ${flip ? 'bg-ink-soft' : ''}`}
             >
               <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
                 <Reveal className={flip ? 'lg:order-2' : ''}>
@@ -177,32 +145,13 @@ export default function ProcessPage() {
         })}
 
         {/* Closing CTA */}
-        <section className="relative overflow-hidden border-t border-ink-line bg-ink-soft py-24 md:py-32">
-          <div className="container-x">
-            <Reveal className="mx-auto max-w-2xl text-center">
-              <p className="eyebrow justify-center">
-                <span className="h-px w-8 bg-gold" />
-                Ας μιλήσουμε
-                <span className="h-px w-8 bg-gold" />
-              </p>
-              <h2 className="heading-display mt-6 text-3xl md:text-5xl">
-                Έτοιμοι για το <span className="gold-text">πρώτο βήμα;</span>
-              </h2>
-              <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone">
-                Πείτε μας για το όραμά σας και θα επικοινωνήσουμε μαζί σας εντός 24 ωρών με τα
-                επόμενα βήματα.
-              </p>
-              <div className="mt-9 flex flex-wrap justify-center gap-4">
-                <a href="../contact/" className="btn-gold">
-                  Ζητήστε προσφορά <ArrowUpRight />
-                </a>
-                <a href={`../${projectsPath}`} className="btn-ghost">
-                  Δείτε τα έργα μας <ArrowUpRight />
-                </a>
-              </div>
-            </Reveal>
-          </div>
-        </section>
+        <ClosingCTA
+          title={
+            <>
+              Έτοιμοι για το <span className="gold-text">πρώτο βήμα;</span>
+            </>
+          }
+        />
       </main>
 
       <Footer homePrefix="../" />

@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite'
 import { dirname, relative } from 'node:path'
-import { renderSeoHead, resolvePageKey } from './src/lib/seo'
+import { renderSeoHead, renderSitemap, resolvePageKey } from './src/lib/seo'
 
 const SEO_MARKER = '<!-- seo -->'
 
@@ -17,11 +17,23 @@ export function seoPlugin(): Plugin {
 
   return {
     name: 'arvanitis-seo',
+    generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: 'sitemap.xml',
+        source: renderSitemap(new Date().toISOString().slice(0, 10)),
+      })
+    },
     transformIndexHtml: {
       order: 'pre',
       handler(html, ctx) {
-        const pageKey = resolvePageKey(ctx.filename)
-        if (!pageKey) return html
+        const relPath = relative(root, ctx.filename).replace(/\\/g, '/')
+        const pageKey = resolvePageKey(relPath)
+        if (!pageKey) {
+          throw new Error(
+            `[arvanitis-seo] "${relPath}" has no entry in seoPages (src/lib/seo.ts) — add one so the page gets its own meta instead of shipping without SEO.`,
+          )
+        }
 
         const assetPrefix = assetPrefixForHtml(ctx.filename, root)
         const seoBlock = renderSeoHead(pageKey, assetPrefix)

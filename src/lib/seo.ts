@@ -28,11 +28,21 @@ type SeoPage = {
   ogType?: 'website' | 'article'
   robots?: string
   breadcrumb?: string
+  changefreq?: 'weekly' | 'monthly' | 'yearly'
+  priority?: number
+  /** Extra image entry for the sitemap (Google image sitemap extension). */
+  sitemapImage?: { loc: string; title: string }
 }
 
 export const seoPages: Record<SeoPageKey, SeoPage> = {
   main: {
     path: '/',
+    changefreq: 'weekly',
+    priority: 1.0,
+    sitemapImage: {
+      loc: OG_IMAGE,
+      title: 'Arvanitis Constructions — Κατασκευές & Ανακαινίσεις Θήβα',
+    },
     title: 'Arvanitis Constructions | Κατασκευές & Ανακαινίσεις Θήβα, Βοιωτία',
     description:
       'Κατασκευαστική εταιρεία στη Θήβα — νέες κατασκευές, ανακαινίσεις, επαγγελματικοί χώροι & λύσεις κλειδί στο χέρι. 10+ χρόνια, 500+ έργα. Ζητήστε προσφορά.',
@@ -50,6 +60,7 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
   },
   services: {
     path: '/services/',
+    priority: 0.9,
     breadcrumb: 'Υπηρεσίες',
     title: 'Υπηρεσίες Κατασκευής & Ανακαίνισης | Arvanitis Constructions Θήβα',
     description:
@@ -59,6 +70,7 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
   },
   projects: {
     path: '/projects/',
+    priority: 0.9,
     breadcrumb: 'Έργα',
     title: 'Έργα & Portfolio | Arvanitis Constructions — Θήβα & Βοιωτία',
     description:
@@ -68,6 +80,7 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
   },
   contact: {
     path: '/contact/',
+    priority: 0.9,
     breadcrumb: 'Επικοινωνία',
     title: 'Επικοινωνία & Προσφορά | Arvanitis Constructions Θήβα',
     description:
@@ -86,6 +99,8 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
   },
   financial: {
     path: '/financial-statements/',
+    changefreq: 'yearly',
+    priority: 0.3,
     breadcrumb: 'Οικονομικά Στοιχεία',
     title: 'Οικονομικά Στοιχεία & Ισολογισμοί | Arvanitis Constructions',
     description:
@@ -94,6 +109,8 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
   },
   privacy: {
     path: '/privacy-policy/',
+    changefreq: 'yearly',
+    priority: 0.2,
     breadcrumb: 'Πολιτική Απορρήτου',
     title: 'Πολιτική Απορρήτου & GDPR | Arvanitis Constructions',
     description:
@@ -291,17 +308,41 @@ function escapeHtml(value: string) {
     .replace(/>/g, '&gt;')
 }
 
+/** Sitemap generated from seoPages so pages can never be missing from it. */
+export function renderSitemap(lastmod: string): string {
+  const urls = Object.values(seoPages).map((page) => {
+    const image = page.sitemapImage
+      ? `
+    <image:image>
+      <image:loc>${escapeHtml(page.sitemapImage.loc)}</image:loc>
+      <image:title>${escapeHtml(page.sitemapImage.title)}</image:title>
+    </image:image>`
+      : ''
+    return `  <url>
+    <loc>${pageUrl(page.path)}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${page.changefreq ?? 'monthly'}</changefreq>
+    <priority>${(page.priority ?? 0.8).toFixed(1)}</priority>${image}
+  </url>`
+  })
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${urls.join('\n')}
+</urlset>
+`
+}
+
+/** `filename` is the html path relative to the project root, e.g. `about/index.html`. */
 export function resolvePageKey(filename: string): SeoPageKey | null {
-  const p = filename.replace(/\\/g, '/')
-  if (p.includes('/about/')) return 'about'
-  if (p.includes('/services/')) return 'services'
-  if (p.includes('/projects/')) return 'projects'
-  if (p.includes('/contact/')) return 'contact'
-  if (p.includes('/process/')) return 'process'
-  if (p.includes('/financial-statements/')) return 'financial'
-  if (p.includes('/privacy-policy/')) return 'privacy'
-  if (p.endsWith('index.html')) return 'main'
-  return null
+  const p = `/${filename.replace(/\\/g, '/')}`
+  if (p === '/index.html') return 'main'
+  const entry = (Object.entries(seoPages) as [SeoPageKey, SeoPage][]).find(
+    ([, page]) => page.path !== '/' && p.startsWith(page.path),
+  )
+  // No 'main' fallback for subpages: a page missing from seoPages must
+  // fail the build instead of silently inheriting the homepage meta.
+  return entry ? entry[0] : null
 }
 
 export function renderSeoHead(pageKey: SeoPageKey, assetPrefix: string): string {

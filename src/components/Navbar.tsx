@@ -15,39 +15,24 @@ type Props = {
   activePage?: ActivePage
 }
 
+// One entry per standalone page — TypeScript enforces the map stays complete
+// whenever a page is added to the ActivePage union.
+const pagePaths: Record<ActivePage, string> = {
+  about: aboutPath,
+  contact: contactPath,
+  projects: projectsPath,
+  services: servicesPath,
+  process: processPath,
+}
+
 function resolveNavHref(href: string, homePrefix: string, activePage?: ActivePage) {
   if (href.startsWith('#')) return `${homePrefix}${href}`
-  if (href === contactPath) {
-    if (activePage === 'contact') return './'
-    return `${homePrefix}${contactPath}`
-  }
-  if (href === aboutPath) {
-    if (activePage === 'about') return './'
-    return `${homePrefix}${aboutPath}`
-  }
-  if (href === projectsPath) {
-    if (activePage === 'projects') return './'
-    return `${homePrefix}${projectsPath}`
-  }
-  if (href === servicesPath) {
-    if (activePage === 'services') return './'
-    return `${homePrefix}${servicesPath}`
-  }
-  if (href === processPath) {
-    if (activePage === 'process') return './'
-    return `${homePrefix}${processPath}`
-  }
+  if (activePage && pagePaths[activePage] === href) return './'
   return `${homePrefix}${href}`
 }
 
 function isNavItemActive(href: string, homePrefix: string, activePage?: ActivePage) {
-  if (!homePrefix || !activePage) return false
-  if (activePage === 'about' && href === aboutPath) return true
-  if (activePage === 'contact' && href === contactPath) return true
-  if (activePage === 'projects' && href === projectsPath) return true
-  if (activePage === 'services' && href === servicesPath) return true
-  if (activePage === 'process' && href === processPath) return true
-  return false
+  return Boolean(homePrefix && activePage && pagePaths[activePage] === href)
 }
 
 export default function Navbar({ homePrefix = '', solid = false, activePage }: Props) {
