@@ -1,13 +1,14 @@
-import { projects, projectsPath, type Project } from '../lib/content'
+import { projects, projectsPath } from '../lib/content'
 import { projectImages } from '../lib/photos'
 import { ArrowRight, ArrowUpRight } from './Icons'
 import { Reveal, RevealGroup, RevealItem } from './ui/Reveal'
 
-const spanClass: Record<Project['span'], string> = {
-  wide: 'md:col-span-2 aspect-[16/10] md:aspect-[2/1]',
-  tall: 'md:row-span-2 aspect-[4/5] md:aspect-auto',
-  normal: 'aspect-[4/3]',
-}
+// Curated home selection — 5 cards fill the 3-col grid exactly (hero spans 2).
+// Full list lives on /projects/. First card renders as the wide hero.
+const FEATURED_IDS = ['p1', 'p6', 'p2', 'p3', 'p7']
+const featured = FEATURED_IDS.map((id) => projects.find((p) => p.id === id)).filter(
+  (p): p is NonNullable<typeof p> => p !== undefined,
+)
 
 export default function Projects() {
   return (
@@ -28,13 +29,16 @@ export default function Projects() {
           </a>
         </Reveal>
 
-        <RevealGroup className="mt-16 grid auto-rows-[minmax(0,auto)] grid-cols-1 gap-5 md:grid-cols-3">
-          {projects.map((p) => (
-            <RevealItem key={p.id} className={p.span === 'wide' ? 'md:col-span-2' : p.span === 'tall' ? 'md:row-span-2' : ''}>
+        {/* Fixed row height keeps every row flush — hero spans 2 cols on row 1 */}
+        <RevealGroup className="mt-16 grid grid-cols-1 gap-5 md:auto-rows-[360px] md:grid-cols-3">
+          {featured.map((p, i) => (
+            <RevealItem key={p.id} className={i === 0 ? 'md:col-span-2' : ''}>
               <a
                 href={`${projectsPath}#${p.id}`}
                 aria-label={`${p.title} — δείτε το έργο`}
-                className={`group relative block w-full overflow-hidden rounded-[2px] border border-ink-line ${spanClass[p.span]}`}
+                className={`group relative block w-full overflow-hidden rounded-[2px] border border-ink-line md:aspect-auto md:h-full ${
+                  i === 0 ? 'aspect-[16/10]' : 'aspect-[4/3]'
+                }`}
               >
                 <img
                   src={projectImages[p.id]}

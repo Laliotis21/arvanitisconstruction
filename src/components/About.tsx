@@ -1,17 +1,22 @@
-import { about } from '../lib/content'
+import { about, aboutPath } from '../lib/content'
 import { photos } from '../lib/photos'
 import { Reveal } from './ui/Reveal'
-import { Check } from './Icons'
+import { Check, ArrowUpRight } from './Icons'
 
 const highlights = ['Premium υλικά', 'Άψογη εκτέλεση', 'Συνέπεια στον χρόνο', 'Προσοχή στη λεπτομέρεια']
 
 export default function About() {
   return (
     <section id="about" className="relative py-28 md:py-36">
-      <div className="container-x grid gap-16 lg:grid-cols-12 lg:gap-20">
+      <div className="container-x grid gap-16 lg:grid-cols-12 lg:items-center lg:gap-20">
         {/* Left visual column */}
         <Reveal className="lg:col-span-5">
           <div className="relative">
+            {/* offset gold frame */}
+            <div
+              aria-hidden
+              className="absolute -left-4 -top-4 hidden h-full w-full rounded-[2px] border border-gold/25 lg:block"
+            />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] border border-ink-line bg-ink-card">
               <img
                 src={photos.aboutVisual}
@@ -19,21 +24,25 @@ export default function About() {
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8">
-                <p className="font-display text-6xl gold-text">20+</p>
-                <p className="mt-1 text-sm uppercase tracking-wide2 text-bone/80">χρόνια στην κατασκευή</p>
+              <div className="absolute inset-x-8 bottom-8 flex items-end gap-6">
+                <div>
+                  <p className="font-display text-5xl gold-text">10+</p>
+                  <p className="mt-1 text-xs uppercase tracking-wide2 text-bone/80">
+                    χρόνια στην κατασκευή
+                  </p>
+                </div>
+                <div aria-hidden className="mb-1 h-12 w-px bg-bone/25" />
+                <div>
+                  <p className="font-display text-5xl gold-text">500+</p>
+                  <p className="mt-1 text-xs uppercase tracking-wide2 text-bone/80">έργα</p>
+                </div>
               </div>
-            </div>
-            {/* floating badge */}
-            <div className="absolute -right-4 -top-4 hidden rounded-[2px] border border-ink-line bg-ink-card px-6 py-4 shadow-card md:block">
-              <p className="font-display text-3xl gold-text">500+</p>
-              <p className="text-xs uppercase tracking-wide2 text-stone">έργα</p>
             </div>
           </div>
         </Reveal>
 
         {/* Right text column */}
-        <div className="lg:col-span-7 lg:pt-6">
+        <div className="lg:col-span-7">
           <Reveal>
             <p className="eyebrow">
               <span className="h-px w-8 bg-gold" />
@@ -65,6 +74,9 @@ export default function About() {
 
           <Reveal delay={0.4}>
             <p className="mt-10 font-display text-lg italic text-gold">— {about.signature}</p>
+            <a href={aboutPath} className="btn-ghost mt-8">
+              Γνωρίστε την εταιρεία <ArrowUpRight />
+            </a>
           </Reveal>
         </div>
       </div>

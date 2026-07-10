@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Logo from './Logo'
 import { Menu, Close } from './Icons'
-import { nav, contactPath, projectsPath } from '../lib/content'
+import { nav, aboutPath, contactPath, projectsPath, servicesPath } from '../lib/content'
 
-type ActivePage = 'contact' | 'projects'
+type ActivePage = 'about' | 'contact' | 'projects' | 'services'
 
 type Props = {
   /** Prefix for home-section anchors on subpages, e.g. `../` from /contact/ */
@@ -21,17 +21,27 @@ function resolveNavHref(href: string, homePrefix: string, activePage?: ActivePag
     if (activePage === 'contact') return './'
     return `${homePrefix}${contactPath}`
   }
+  if (href === aboutPath) {
+    if (activePage === 'about') return './'
+    return `${homePrefix}${aboutPath}`
+  }
   if (href === projectsPath) {
     if (activePage === 'projects') return './'
     return `${homePrefix}${projectsPath}`
+  }
+  if (href === servicesPath) {
+    if (activePage === 'services') return './'
+    return `${homePrefix}${servicesPath}`
   }
   return `${homePrefix}${href}`
 }
 
 function isNavItemActive(href: string, homePrefix: string, activePage?: ActivePage) {
   if (!homePrefix || !activePage) return false
+  if (activePage === 'about' && href === aboutPath) return true
   if (activePage === 'contact' && href === contactPath) return true
   if (activePage === 'projects' && href === projectsPath) return true
+  if (activePage === 'services' && href === servicesPath) return true
   return false
 }
 

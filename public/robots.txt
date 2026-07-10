@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# Static assets
+Allow: /og-image.jpg
+Allow: /arvanitis-logo.png
+Allow: /favicon.svg
+
 Sitemap: https://www.arvanitisconstruction.gr/sitemap.xml

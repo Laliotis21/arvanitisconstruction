@@ -1,13 +1,14 @@
 # Arvanitis Constructions — Hostinger (Apache) static hosting config
 
-# Force HTTPS + www
+# Force HTTPS + www (matches canonical URLs)
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{HTTPS} off
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.arvanitisconstruction.gr%{REQUEST_URI} [L,R=301]
 </IfModule>
 
-# SPA fallback (single page app) — serve index.html for unknown routes
+# MPA routes — serve folder index.html; fallback only for unknown paths
 <IfModule mod_rewrite.c>
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
