@@ -5,4 +5,6 @@ dist-ssr
 .DS_Store
 .env
 .env.*
+# GA measurement ID is public; committed so the Hostinger/GitHub build gets it.
+!.env.production
 npm-debug.log*
