@@ -1,13 +1,12 @@
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import { ServiceIcon, ArrowUpRight, Check } from './components/Icons'
 import { Reveal, RevealGroup, RevealItem } from './components/ui/Reveal'
-import { company, legal, process, projectsPath, services, servicesPage } from './lib/content'
+import { process, projectsPath, services, servicesPage } from './lib/content'
 import { photos, projectImages } from './lib/photos'
 
 // Standalone page served at /services/
 export default function ServicesPage() {
-  const year = new Date().getFullYear()
-
   return (
     <>
       <Navbar homePrefix="../" solid activePage="services" />
@@ -196,25 +195,7 @@ export default function ServicesPage() {
         </section>
       </main>
 
-      <footer className="border-t border-ink-line bg-ink py-12">
-        <div className="container-x flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-stone">
-            <a href={`mailto:${company.email}`} className="transition-colors hover:text-gold">
-              {company.email}
-            </a>
-            <a href={`tel:${company.phoneHref}`} className="transition-colors hover:text-gold">
-              {company.phone}
-            </a>
-            <span>{company.location}</span>
-            <a href="../privacy-policy/" className="transition-colors hover:text-gold">
-              Πολιτική Απορρήτου
-            </a>
-          </div>
-          <p className="text-xs text-stone/70">
-            © {year} {legal.entity} · Αρ. Γ.Ε.ΜΗ. {legal.gemi} · ΑΦΜ {legal.afm}
-          </p>
-        </div>
-      </footer>
+      <Footer homePrefix="../" />
     </>
   )
 }

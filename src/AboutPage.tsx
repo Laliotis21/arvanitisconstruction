@@ -1,16 +1,15 @@
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import { ArrowUpRight, Check } from './components/Icons'
 import { Reveal, RevealGroup, RevealItem } from './components/ui/Reveal'
 import { Counter } from './components/ui/Counter'
-import { about, company, legal, process, projectsPath, stats } from './lib/content'
+import { about, company, process, projectsPath, stats } from './lib/content'
 import { photos } from './lib/photos'
 
 const highlights = ['Premium υλικά', 'Άψογη εκτέλεση', 'Συνέπεια στον χρόνο', 'Προσοχή στη λεπτομέρεια']
 
 // Standalone page served at /about/
 export default function AboutPage() {
-  const year = new Date().getFullYear()
-
   return (
     <>
       <Navbar homePrefix="../" solid activePage="about" />
@@ -300,25 +299,7 @@ export default function AboutPage() {
         </section>
       </main>
 
-      <footer className="border-t border-ink-line bg-ink py-12">
-        <div className="container-x flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-stone">
-            <a href={`mailto:${company.email}`} className="transition-colors hover:text-gold">
-              {company.email}
-            </a>
-            <a href={`tel:${company.phoneHref}`} className="transition-colors hover:text-gold">
-              {company.phone}
-            </a>
-            <span>{company.location}</span>
-            <a href="../privacy-policy/" className="transition-colors hover:text-gold">
-              Πολιτική Απορρήτου
-            </a>
-          </div>
-          <p className="text-xs text-stone/70">
-            © {year} {legal.entity} · Αρ. Γ.Ε.ΜΗ. {legal.gemi} · ΑΦΜ {legal.afm}
-          </p>
-        </div>
-      </footer>
+      <Footer homePrefix="../" />
     </>
   )
 }

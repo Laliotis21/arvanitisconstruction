@@ -3,14 +3,25 @@ import SocialLinks from './SocialLinks'
 import { company, legal, nav, services, projectsPath, servicesPath } from '../lib/content'
 import { analyticsEnabled, resetConsent } from '../lib/analytics'
 
-export default function Footer() {
+type Props = {
+  /** Prefix for internal links on subpages, e.g. `../` from /contact/ */
+  homePrefix?: string
+}
+
+function resolveHref(href: string, homePrefix: string) {
+  return `${homePrefix}${href}`
+}
+
+export default function Footer({ homePrefix = '' }: Props) {
   const year = new Date().getFullYear()
+  const logoHref = homePrefix ? `${homePrefix}` : '#home'
+
   return (
     <footer className="border-t border-ink-line bg-ink py-16">
       <div className="container-x">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <Logo />
+            <Logo href={logoHref} />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-stone">
               Σχεδιάζουμε χώρους, δημιουργούμε εμπιστοσύνη, παραδίδουμε ποιότητα. Θήβα, Βοιωτίας.
             </p>
@@ -31,13 +42,19 @@ export default function Footer() {
             <ul className="mt-5 space-y-3">
               {nav.map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="text-bone/90 transition-colors hover:text-gold">
+                  <a
+                    href={resolveHref(n.href, homePrefix)}
+                    className="text-bone/90 transition-colors hover:text-gold"
+                  >
                     {n.label}
                   </a>
                 </li>
               ))}
               <li>
-                <a href={projectsPath} className="text-bone/90 transition-colors hover:text-gold">
+                <a
+                  href={resolveHref(projectsPath, homePrefix)}
+                  className="text-bone/90 transition-colors hover:text-gold"
+                >
                   Όλα τα Έργα
                 </a>
               </li>
@@ -49,7 +66,10 @@ export default function Footer() {
             <ul className="mt-5 space-y-3">
               {services.map((s) => (
                 <li key={s.id}>
-                  <a href={`${servicesPath}#${s.id}`} className="text-bone/90 transition-colors hover:text-gold">
+                  <a
+                    href={`${resolveHref(servicesPath, homePrefix)}#${s.id}`}
+                    className="text-bone/90 transition-colors hover:text-gold"
+                  >
                     {s.title}
                   </a>
                 </li>
@@ -68,7 +88,7 @@ export default function Footer() {
               <li>Έδρα: {legal.seat}</li>
               <li>
                 <a
-                  href="financial-statements/"
+                  href={resolveHref('financial-statements/', homePrefix)}
                   className="inline-flex items-center gap-2 text-bone/90 transition-colors hover:text-gold"
                 >
                   Οικονομικά Στοιχεία &amp; Ισολογισμοί
@@ -79,13 +99,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Legal-only bottom bar; Γ.Ε.ΜΗ./ΑΦΜ live in the «Εταιρικά Στοιχεία» column above */}
         <div className="mt-14 flex flex-col gap-4 border-t border-ink-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-stone/70">
             © {year} {legal.entity} — Με επιφύλαξη παντός δικαιώματος.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone">
-            <a href="privacy-policy/" className="transition-colors hover:text-gold">
+            <a
+              href={resolveHref('privacy-policy/', homePrefix)}
+              className="transition-colors hover:text-gold"
+            >
               Πολιτική Απορρήτου
             </a>
             {analyticsEnabled && (

@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import { ArrowRight, ArrowUpRight, Close } from './components/Icons'
 import { Reveal } from './components/ui/Reveal'
-import { company, legal, projects, type Project } from './lib/content'
+import { company, projects, type Project } from './lib/content'
 import { projectGalleries, projectImages } from './lib/photos'
 
 const ALL = 'Όλα'
@@ -125,7 +126,6 @@ function Lightbox({ project, onClose }: { project: Project; onClose: () => void 
 
 // Standalone page served at /projects/ — full portfolio with category filter + lightbox.
 export default function ProjectsPage() {
-  const year = new Date().getFullYear()
   const reduce = useReducedMotion()
   const [category, setCategory] = useState(ALL)
   const [open, setOpen] = useState<Project | null>(null)
@@ -271,26 +271,7 @@ export default function ProjectsPage() {
         </section>
       </main>
 
-      {/* Slim footer */}
-      <footer className="border-t border-ink-line bg-ink py-12">
-        <div className="container-x flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-stone">
-            <a href={`mailto:${company.email}`} className="transition-colors hover:text-gold">
-              {company.email}
-            </a>
-            <a href={`tel:${company.phoneHref}`} className="transition-colors hover:text-gold">
-              {company.phone}
-            </a>
-            <span>{company.location}</span>
-            <a href="../privacy-policy/" className="transition-colors hover:text-gold">
-              Πολιτική Απορρήτου
-            </a>
-          </div>
-          <p className="text-xs text-stone/70">
-            © {year} {legal.entity} · Αρ. Γ.Ε.ΜΗ. {legal.gemi} · ΑΦΜ {legal.afm}
-          </p>
-        </div>
-      </footer>
+      <Footer homePrefix="../" />
 
       <AnimatePresence>{open && <Lightbox project={open} onClose={() => setOpen(null)} />}</AnimatePresence>
     </>
