@@ -1,4 +1,5 @@
 import { process } from '../lib/content'
+import { ArrowUpRight } from './Icons'
 import { Reveal, RevealGroup, RevealItem } from './ui/Reveal'
 
 export default function Process() {
@@ -28,6 +29,18 @@ export default function Process() {
             </RevealItem>
           ))}
         </RevealGroup>
+
+        <Reveal className="mt-12">
+          <a
+            href="./process/"
+            className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide2 text-bone transition-colors hover:text-gold"
+          >
+            Δείτε τη διαδικασία αναλυτικά
+            <span className="transition-transform duration-300 group-hover:translate-x-1">
+              <ArrowUpRight />
+            </span>
+          </a>
+        </Reveal>
       </div>
     </section>
   )

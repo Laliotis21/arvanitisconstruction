@@ -1,11 +1,12 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { hero, contactPath, projectsPath } from '../lib/content'
-import { photos } from '../lib/photos'
 import { ArrowRight, ArrowUpRight } from './Icons'
 
 // Drop a muted, ~8s construction/drone loop at public/hero.mp4 (h264, ~1080p, <6MB).
 // Until then the poster photo shows — no broken state.
 const VIDEO_SRC = `${import.meta.env.BASE_URL}hero.mp4`
+// Unhashed public asset so the SEO head can <link rel="preload"> it (LCP).
+const POSTER_SRC = `${import.meta.env.BASE_URL}hero-poster.webp`
 
 export default function Hero() {
   const reduce = useReducedMotion()
@@ -15,7 +16,7 @@ export default function Hero() {
       {/* Background video (poster fallback until hero.mp4 exists) */}
       <video
         className="absolute inset-0 h-full w-full object-cover"
-        poster={photos.heroPlate}
+        poster={POSTER_SRC}
         autoPlay={!reduce}
         loop
         muted

@@ -1,12 +1,12 @@
 // Real company photos (Arvanitis HQ / interiors), optimized to 1600px.
-import p9259 from '../assets/photos/9259.jpg' // office w/ logo wall (portrait) — hero
-import p9802 from '../assets/photos/9802.jpg' // storefront exterior (portrait) — about
-import p9829 from '../assets/photos/9829.jpg' // glass entrance lounge (wide)
-import p9450 from '../assets/photos/9450.jpg' // floating wood stairs (tall)
-import p9519 from '../assets/photos/9519.jpg' // dark wood desk + slats
-import p9490 from '../assets/photos/9490.jpg' // wood lounge / TV
-import p9619 from '../assets/photos/9619.jpg' // bathroom LED mirror (tall)
-import p9822 from '../assets/photos/9822.jpg' // office interior wide
+import p9259 from '../assets/photos/9259.webp' // office w/ logo wall (portrait) — hero
+import p9802 from '../assets/photos/9802.webp' // storefront exterior (portrait) — about
+import p9829 from '../assets/photos/9829.webp' // glass entrance lounge (wide)
+import p9450 from '../assets/photos/9450.webp' // floating wood stairs (tall)
+import p9519 from '../assets/photos/9519.webp' // dark wood desk + slats
+import p9490 from '../assets/photos/9490.webp' // wood lounge / TV
+import p9619 from '../assets/photos/9619.webp' // bathroom LED mirror (tall)
+import p9822 from '../assets/photos/9822.webp' // office interior wide
 
 export const photos = {
   heroPlate: p9259,

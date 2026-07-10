@@ -20,6 +20,7 @@ export default defineConfig({
         financial: resolve(process.cwd(), 'financial-statements/index.html'),
         privacy: resolve(process.cwd(), 'privacy-policy/index.html'),
         contact: resolve(process.cwd(), 'contact/index.html'),
+        process: resolve(process.cwd(), 'process/index.html'),
       },
     },
   },

@@ -1,4 +1,4 @@
-import { company, googleReviews, legal, projects, services, social } from './content'
+import { company, googleReviews, legal, process, projects, services, social } from './content'
 
 export const SITE_URL = 'https://www.arvanitisconstruction.gr'
 export const SITE_NAME = 'Arvanitis Constructions'
@@ -16,6 +16,7 @@ export type SeoPageKey =
   | 'services'
   | 'projects'
   | 'contact'
+  | 'process'
   | 'financial'
   | 'privacy'
 
@@ -73,6 +74,15 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
       'Ζητήστε δωρεάν προσφορά για κατασκευή ή ανακαίνιση. Arvanitis Constructions, Κύπρου 4 Θήβα — τηλ. 6944 764 936. Απάντηση εντός 24 ωρών.',
     keywords:
       'επικοινωνία κατασκευαστική Θήβα, προσφορά ανακαίνισης, Arvanitis Constructions τηλέφωνο, κατασκευές Βοιωτία επικοινωνία',
+  },
+  process: {
+    path: '/process/',
+    breadcrumb: 'Διαδικασία',
+    title: 'Διαδικασία Εργασίας | Arvanitis Constructions — Από τη Μελέτη στην Παράδοση',
+    description:
+      'Πώς δουλεύουμε: 4 στάδια από τη μελέτη & 3D σχεδιασμό έως την κατασκευή και παράδοση κλειδί στο χέρι. Διαφάνεια & συνέπεια σε κάθε βήμα.',
+    keywords:
+      'διαδικασία κατασκευής, βήματα ανακαίνισης, 3D σχεδιασμός, κλειδί στο χέρι, διαδικασία έργου Θήβα',
   },
   financial: {
     path: '/financial-statements/',
@@ -255,6 +265,21 @@ function pageJsonLd(key: SeoPageKey) {
     })
   }
 
+  if (key === 'process') {
+    graph.push({
+      '@type': 'HowTo',
+      name: 'Διαδικασία κατασκευής Arvanitis Constructions',
+      description: page.description,
+      step: process.map((step, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: step.title,
+        text: step.desc,
+        url: `${SITE_URL}/process/#${step.id}`,
+      })),
+    })
+  }
+
   return { '@context': 'https://schema.org', '@graph': graph }
 }
 
@@ -272,6 +297,7 @@ export function resolvePageKey(filename: string): SeoPageKey | null {
   if (p.includes('/services/')) return 'services'
   if (p.includes('/projects/')) return 'projects'
   if (p.includes('/contact/')) return 'contact'
+  if (p.includes('/process/')) return 'process'
   if (p.includes('/financial-statements/')) return 'financial'
   if (p.includes('/privacy-policy/')) return 'privacy'
   if (p.endsWith('index.html')) return 'main'
@@ -285,7 +311,14 @@ export function renderSeoHead(pageKey: SeoPageKey, assetPrefix: string): string 
   const ogType = page.ogType ?? 'website'
   const jsonLd = JSON.stringify(pageJsonLd(pageKey), null, 2).replace(/</g, '\\u003c')
 
-  return `    <meta name="theme-color" content="#0B0B0C" />
+  // Home LCP is the hero video poster — preload it so it wins the network race.
+  const preload =
+    pageKey === 'main'
+      ? `\n    <link rel="preload" as="image" href="${assetPrefix}hero-poster.webp" fetchpriority="high" />`
+      : ''
+
+
+  return `    <meta name="theme-color" content="#0B0B0C" />${preload}
     <meta name="robots" content="${robots}" />
     <meta name="author" content="${escapeHtml(SITE_NAME)}" />
     <meta name="keywords" content="${escapeHtml(page.keywords)}" />

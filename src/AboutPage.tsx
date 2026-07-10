@@ -3,7 +3,7 @@ import Footer from './components/Footer'
 import { ArrowUpRight, Check } from './components/Icons'
 import { Reveal, RevealGroup, RevealItem } from './components/ui/Reveal'
 import { Counter } from './components/ui/Counter'
-import { about, company, process, projectsPath, stats } from './lib/content'
+import { about, company, projectsPath, stats } from './lib/content'
 import { photos } from './lib/photos'
 
 const highlights = ['Premium υλικά', 'Άψογη εκτέλεση', 'Συνέπεια στον χρόνο', 'Προσοχή στη λεπτομέρεια']
@@ -195,33 +195,6 @@ export default function AboutPage() {
                     <p className="mt-3 text-xs uppercase tracking-wide2 text-stone md:text-sm">
                       {s.label}
                     </p>
-                  </div>
-                </RevealItem>
-              ))}
-            </RevealGroup>
-          </div>
-        </section>
-
-        {/* How we work */}
-        <section className="border-b border-ink-line py-20 md:py-28">
-          <div className="container-x">
-            <Reveal className="max-w-2xl">
-              <p className="eyebrow">
-                <span className="h-px w-8 bg-gold" />
-                Πώς δουλεύουμε
-              </p>
-              <h2 className="heading-display mt-6 text-3xl md:text-4xl lg:text-5xl">
-                Από την ιδέα, <span className="gold-text">στο κλειδί στο χέρι.</span>
-              </h2>
-            </Reveal>
-
-            <RevealGroup className="mt-14 grid gap-px overflow-hidden rounded-[2px] border border-ink-line sm:grid-cols-2 lg:grid-cols-4">
-              {process.map((step) => (
-                <RevealItem key={step.n}>
-                  <div className="h-full bg-ink-card p-8">
-                    <p className="font-display text-4xl text-gold/60">{step.n}</p>
-                    <h3 className="mt-4 font-display text-2xl text-bone">{step.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-stone">{step.desc}</p>
                   </div>
                 </RevealItem>
               ))}

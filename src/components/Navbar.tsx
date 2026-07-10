@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Logo from './Logo'
 import { Menu, Close } from './Icons'
-import { nav, aboutPath, contactPath, projectsPath, servicesPath } from '../lib/content'
+import { nav, aboutPath, contactPath, projectsPath, servicesPath, processPath } from '../lib/content'
 
-type ActivePage = 'about' | 'contact' | 'projects' | 'services'
+type ActivePage = 'about' | 'contact' | 'projects' | 'services' | 'process'
 
 type Props = {
   /** Prefix for home-section anchors on subpages, e.g. `../` from /contact/ */
@@ -33,6 +33,10 @@ function resolveNavHref(href: string, homePrefix: string, activePage?: ActivePag
     if (activePage === 'services') return './'
     return `${homePrefix}${servicesPath}`
   }
+  if (href === processPath) {
+    if (activePage === 'process') return './'
+    return `${homePrefix}${processPath}`
+  }
   return `${homePrefix}${href}`
 }
 
@@ -42,6 +46,7 @@ function isNavItemActive(href: string, homePrefix: string, activePage?: ActivePa
   if (activePage === 'contact' && href === contactPath) return true
   if (activePage === 'projects' && href === projectsPath) return true
   if (activePage === 'services' && href === servicesPath) return true
+  if (activePage === 'process' && href === processPath) return true
   return false
 }
 

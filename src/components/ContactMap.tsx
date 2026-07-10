@@ -10,7 +10,7 @@ export default function ContactMap() {
 
   return (
     <div className="overflow-hidden rounded-[2px] border border-ink-line bg-ink-card shadow-card">
-      <div className="map-frame relative aspect-[16/10] min-h-[280px] sm:min-h-[340px] md:min-h-[400px]">
+      <div className="map-frame relative w-full overflow-hidden aspect-[16/10] min-h-[280px] sm:min-h-[340px] md:min-h-[400px]">
         {mapLoaded ? (
           <iframe
             title={`Χάρτης — ${company.name}, ${company.location}`}
