@@ -103,7 +103,7 @@ export default function ServicesPage() {
                   </ul>
 
                   <a
-                    href="../#contact"
+                    href="../contact/"
                     className="btn-gold mt-9"
                   >
                     Ζητήστε προσφορά <ArrowUpRight />
@@ -149,7 +149,7 @@ export default function ServicesPage() {
                 Πείτε μας για το όραμά σας και θα επικοινωνήσουμε μαζί σας εντός 24 ωρών με τα επόμενα βήματα.
               </p>
               <div className="mt-9 flex flex-wrap justify-center gap-4">
-                <a href="../#contact" className="btn-gold">
+                <a href="../contact/" className="btn-gold">
                   Ζητήστε προσφορά <ArrowUpRight />
                 </a>
                 <a href={`tel:${company.phoneHref}`} className="btn-ghost">

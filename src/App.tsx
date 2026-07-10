@@ -8,7 +8,6 @@ import Projects from './components/Projects'
 import Process from './components/Process'
 import Stats from './components/Stats'
 import Testimonials from './components/Testimonials'
-import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 function ScrollProgress() {
@@ -36,7 +35,6 @@ export default function App() {
         <Process />
         <Stats />
         <Testimonials />
-        <Contact />
       </main>
       <Footer />
     </>

@@ -2,17 +2,24 @@ import { useState, type FormEvent } from 'react'
 import { contact, company, services } from '../lib/content'
 import { track } from '../lib/analytics'
 import { Reveal } from './ui/Reveal'
+import ContactMap from './ContactMap'
+import SocialLinks from './SocialLinks'
 import { Mail, Phone, Pin, ArrowRight, Check } from './Icons'
 
 const details = [
   { icon: Mail, label: 'Email', value: company.email, href: `mailto:${company.email}`, event: 'email_click' },
   { icon: Phone, label: 'Τηλέφωνο', value: company.phone, href: `tel:${company.phoneHref}`, event: 'phone_click' },
-  { icon: Pin, label: 'Έδρα', value: company.location, href: undefined, event: undefined },
+  { icon: Pin, label: 'Διεύθυνση', value: company.address, href: company.mapsDirectionsUrl, event: 'maps_click' },
 ]
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
-export default function Contact() {
+type Props = {
+  standalone?: boolean
+  privacyHref?: string
+}
+
+export default function Contact({ standalone = false, privacyHref = 'privacy-policy/' }: Props) {
   const [status, setStatus] = useState<Status>('idle')
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -47,7 +54,9 @@ export default function Contact() {
   const mailtoFallback = `mailto:${company.email}?subject=${encodeURIComponent('Αίτημα προσφοράς')}`
 
   return (
-    <section id="contact" className="relative border-t border-ink-line bg-ink-soft py-28 md:py-36">
+    <section
+      className={`relative bg-ink-soft py-28 md:py-36 ${standalone ? '' : 'border-t border-ink-line'}`}
+    >
       {/* glow */}
       <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/10 blur-[130px]" />
 
@@ -58,9 +67,9 @@ export default function Contact() {
               <span className="h-px w-8 bg-gold" />
               {contact.eyebrow}
             </p>
-            <h2 className="heading-display mt-6 whitespace-pre-line text-4xl md:text-5xl">
+            <h1 className="heading-display mt-6 whitespace-pre-line text-4xl md:text-5xl">
               {contact.title}
-            </h2>
+            </h1>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-stone">{contact.body}</p>
           </Reveal>
 
@@ -77,6 +86,9 @@ export default function Contact() {
                       {href ? (
                         <a
                           href={href}
+                          {...(href.startsWith('http')
+                            ? { target: '_blank', rel: 'noopener noreferrer' }
+                            : {})}
                           onClick={event ? () => track(event) : undefined}
                           className="font-display text-lg text-bone transition-colors hover:text-gold"
                         >
@@ -90,6 +102,7 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
+            <SocialLinks className="mt-10" />
           </Reveal>
         </div>
 
@@ -164,7 +177,7 @@ export default function Contact() {
                   <span>
                     Συναινώ στην επεξεργασία των στοιχείων μου για την επικοινωνία σχετικά με το
                     αίτημά μου, σύμφωνα με την{' '}
-                    <a href="privacy-policy/" target="_blank" rel="noopener" className="text-gold underline-offset-4 hover:underline">
+                    <a href={privacyHref} target="_blank" rel="noopener" className="text-gold underline-offset-4 hover:underline">
                       Πολιτική Απορρήτου
                     </a>
                     . <span className="text-gold">*</span>
@@ -188,6 +201,14 @@ export default function Contact() {
           </div>
         </Reveal>
       </div>
+
+      <Reveal delay={0.2} className="container-x mt-16 md:mt-20">
+        <p className="eyebrow mb-6">
+          <span className="h-px w-8 bg-gold" />
+          Πού θα μας βρείτε
+        </p>
+        <ContactMap />
+      </Reveal>
     </section>
   )
 }

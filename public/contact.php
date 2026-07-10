@@ -30,8 +30,9 @@ $email   = trim($data['email'] ?? '');
 $phone   = trim($data['phone'] ?? '');
 $service = trim($data['service'] ?? '');
 $message = trim($data['message'] ?? '');
+$consent = ($data['consent'] ?? false) === true;
 
-if ($name === '' || $phone === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if (!$consent || $name === '' || $phone === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(422);
     echo json_encode(['ok' => false, 'error' => 'validation']);
     exit;
@@ -54,6 +55,7 @@ $body = "Όνομα: {$name}\n"
       . "Τηλέφωνο: {$phone}\n"
       . "Υπηρεσία: {$service}\n\n"
       . "Μήνυμα:\n{$message}\n\n"
+      . 'Συγκατάθεση GDPR: Ναι (' . gmdate('c') . ")\n"
       . "— Στάλθηκε από τη φόρμα του arvanitisconstruction.gr\n"
       . 'IP: ' . ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
 

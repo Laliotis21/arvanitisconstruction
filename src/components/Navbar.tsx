@@ -2,11 +2,45 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Logo from './Logo'
 import { Menu, Close } from './Icons'
-import { nav } from '../lib/content'
+import { nav, contactPath, projectsPath } from '../lib/content'
 
-export default function Navbar() {
+type ActivePage = 'contact' | 'projects'
+
+type Props = {
+  /** Prefix for home-section anchors on subpages, e.g. `../` from /contact/ */
+  homePrefix?: string
+  /** Keep header opaque (no transparent-at-top state) — for inner pages without a hero */
+  solid?: boolean
+  /** Highlight the matching nav item on standalone pages */
+  activePage?: ActivePage
+}
+
+function resolveNavHref(href: string, homePrefix: string, activePage?: ActivePage) {
+  if (href.startsWith('#')) return `${homePrefix}${href}`
+  if (href === contactPath) {
+    if (activePage === 'contact') return './'
+    return `${homePrefix}${contactPath}`
+  }
+  if (href === projectsPath) {
+    if (activePage === 'projects') return './'
+    return `${homePrefix}${projectsPath}`
+  }
+  return `${homePrefix}${href}`
+}
+
+function isNavItemActive(href: string, homePrefix: string, activePage?: ActivePage) {
+  if (!homePrefix || !activePage) return false
+  if (activePage === 'contact' && href === contactPath) return true
+  if (activePage === 'projects' && href === projectsPath) return true
+  return false
+}
+
+export default function Navbar({ homePrefix = '', solid = false, activePage }: Props) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const showSolid = solid || scrolled
+  const logoHref = homePrefix ? `${homePrefix}` : '#home'
+  const ctaHref = activePage === 'contact' ? './' : homePrefix ? `${homePrefix}${contactPath}` : contactPath
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -26,29 +60,37 @@ export default function Navbar() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled
+          showSolid
             ? 'border-b border-ink-line/70 bg-ink/85 backdrop-blur-xl'
             : 'border-b border-transparent bg-transparent'
         }`}
       >
-        <div className="container-x flex h-[88px] items-center justify-between">
-          <Logo />
+        <div className="container-x flex h-[88px] items-center justify-between gap-4">
+          <Logo href={logoHref} height={46} />
 
           <nav className="hidden items-center gap-9 lg:flex">
-            {nav.map((item) => (
+            {nav.map((item) => {
+              const href = resolveNavHref(item.href, homePrefix, activePage)
+              const isActive = isNavItemActive(item.href, homePrefix, activePage)
+              return (
               <a
                 key={item.href}
-                href={item.href}
-                className="group relative text-sm font-medium text-stone transition-colors duration-300 hover:text-bone"
+                href={href}
+                aria-current={isActive ? 'page' : undefined}
+                className={`group relative text-sm font-medium transition-colors duration-300 ${
+                  isActive ? 'text-gold' : 'text-stone hover:text-bone'
+                }`}
               >
                 {item.label}
-                <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute -bottom-1.5 left-0 h-px bg-gold transition-all duration-300 ${
+                  isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                }`} />
               </a>
-            ))}
+            )})}
           </nav>
 
           <div className="hidden lg:block">
-            <a href="#contact" className="btn-gold">
+            <a href={ctaHref} className="btn-gold">
               Ζητήστε προσφορά
             </a>
           </div>
@@ -72,8 +114,8 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="container-x flex h-[88px] items-center justify-between">
-              <Logo />
+            <div className="container-x flex h-[88px] items-center justify-between gap-4">
+              <Logo href={logoHref} height={46} />
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -84,20 +126,26 @@ export default function Navbar() {
               </button>
             </div>
             <nav className="container-x mt-10 flex flex-col gap-2">
-              {nav.map((item, i) => (
+              {nav.map((item, i) => {
+                const href = resolveNavHref(item.href, homePrefix, activePage)
+                const isActive = isNavItemActive(item.href, homePrefix, activePage)
+                return (
                 <motion.a
                   key={item.href}
-                  href={item.href}
+                  href={href}
                   onClick={() => setOpen(false)}
+                  aria-current={isActive ? 'page' : undefined}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.08 * i + 0.1 }}
-                  className="border-b border-ink-line/60 py-5 font-display text-3xl font-medium text-bone hover:text-gold"
+                  className={`border-b border-ink-line/60 py-5 font-display text-3xl font-medium ${
+                    isActive ? 'text-gold' : 'text-bone hover:text-gold'
+                  }`}
                 >
                   {item.label}
                 </motion.a>
-              ))}
-              <a href="#contact" onClick={() => setOpen(false)} className="btn-gold mt-8 w-full">
+              )})}
+              <a href={ctaHref} onClick={() => setOpen(false)} className="btn-gold mt-8 w-full">
                 Ζητήστε προσφορά
               </a>
             </nav>

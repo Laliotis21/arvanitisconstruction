@@ -1,4 +1,4 @@
-import { projects, type Project } from '../lib/content'
+import { projects, projectsPath, type Project } from '../lib/content'
 import { projectImages } from '../lib/photos'
 import { ArrowRight, ArrowUpRight } from './Icons'
 import { Reveal, RevealGroup, RevealItem } from './ui/Reveal'
@@ -23,7 +23,7 @@ export default function Projects() {
               Χώροι που <span className="gold-text">μιλούν</span> από μόνοι τους.
             </h2>
           </div>
-          <a href="projects/" className="btn-ghost">
+          <a href={projectsPath} className="btn-ghost">
             Όλα τα έργα <ArrowUpRight />
           </a>
         </Reveal>
@@ -32,7 +32,7 @@ export default function Projects() {
           {projects.map((p) => (
             <RevealItem key={p.id} className={p.span === 'wide' ? 'md:col-span-2' : p.span === 'tall' ? 'md:row-span-2' : ''}>
               <a
-                href={`projects/#${p.id}`}
+                href={`${projectsPath}#${p.id}`}
                 aria-label={`${p.title} — δείτε το έργο`}
                 className={`group relative block w-full overflow-hidden rounded-[2px] border border-ink-line ${spanClass[p.span]}`}
               >
@@ -62,7 +62,7 @@ export default function Projects() {
         </RevealGroup>
 
         <Reveal className="mt-14 flex justify-center">
-          <a href="projects/" className="btn-gold">
+          <a href={projectsPath} className="btn-gold">
             Δείτε όλα τα έργα <ArrowRight />
           </a>
         </Reveal>

@@ -17,6 +17,7 @@ export default defineConfig({
         projects: resolve(process.cwd(), 'projects/index.html'),
         financial: resolve(process.cwd(), 'financial-statements/index.html'),
         privacy: resolve(process.cwd(), 'privacy-policy/index.html'),
+        contact: resolve(process.cwd(), 'contact/index.html'),
       },
     },
   },

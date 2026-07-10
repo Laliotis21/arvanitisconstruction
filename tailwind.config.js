@@ -41,6 +41,10 @@ export default {
         card: '0 24px 60px -30px rgba(0,0,0,0.85)',
       },
       keyframes: {
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
@@ -51,6 +55,7 @@ export default {
         },
       },
       animation: {
+        marquee: 'marquee 28s linear infinite',
         shimmer: 'shimmer 6s linear infinite',
         float: 'float 6s ease-in-out infinite',
       },

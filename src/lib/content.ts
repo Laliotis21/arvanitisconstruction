@@ -10,15 +10,38 @@ export const company = {
   phone: '6944 764 936',
   phoneHref: '+306944764936',
   location: 'Θήβα, Βοιωτίας',
+  address: 'Κύπρου 4, Θήβα, 32200',
+  mapsEmbedUrl:
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3130.265294795398!2d23.31446!3d38.31968!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a0ff00138277ab%3A0x3947b177869b54d6!2sArvanitis%20Construction!5e0!3m2!1sel!2sgr!4v1700000000000',
+  mapsDirectionsUrl: 'https://www.google.com/maps/dir//Κύπρου+4,+Θήβα+32200',
+  mapsPlaceUrl:
+    'https://www.google.com/maps/place/Arvanitis+Construction/@38.3163852,23.3193762,17z/data=!4m8!3m7!1s0x14a0ff00138277ab:0x3947b177869b54d6!8m2!3d38.3163852!4d23.3193762!9m1!1b1!16s%2Fg%2F11m5hnhmxp',
+  coordinates: '38.31639° N, 23.31938° E',
   website: 'www.arvanitisconstruction.gr',
 } as const
+
+export const social = [
+  {
+    label: 'Instagram',
+    network: 'instagram',
+    href: 'https://www.instagram.com/constructionarvanitis/',
+  },
+  {
+    label: 'TikTok',
+    network: 'tiktok',
+    href: 'https://www.tiktok.com/@arvanitis_constru',
+  },
+] as const
+
+export const contactPath = 'contact/'
+export const projectsPath = 'projects/'
 
 export const nav = [
   { label: 'Εταιρεία', href: '#about' },
   { label: 'Υπηρεσίες', href: '#services' },
-  { label: 'Έργα', href: '#projects' },
+  { label: 'Έργα', href: projectsPath },
   { label: 'Διαδικασία', href: '#process' },
-  { label: 'Επικοινωνία', href: '#contact' },
+  { label: 'Επικοινωνία', href: contactPath },
 ] as const
 
 export const hero = {
@@ -189,26 +212,58 @@ export const stats = [
   { value: 100, suffix: '%', label: 'Ικανοποίηση πελατών' },
 ]
 
-export type Testimonial = { quote: string; name: string; role: string }
+export type Testimonial = {
+  quote: string
+  name: string
+  rating: number
+}
+
+// Live Google Maps reviews — Arvanitis Construction, Θήβα
+export const googleReviews = {
+  rating: 5,
+  count: 10,
+  url: 'https://www.google.com/maps/place/Arvanitis+Construction/@38.3163852,23.3193762,17z/data=!4m8!3m7!1s0x14a0ff00138277ab:0x3947b177869b54d6!8m2!3d38.3163852!4d23.3193762!9m1!1b1!16s%2Fg%2F11m5hnhmxp',
+} as const
 
 export const testimonials: Testimonial[] = [
   {
     quote:
-      'Παρέδωσαν την ανακαίνιση στην ώρα τους και το αποτέλεσμα ξεπέρασε κάθε προσδοκία. Άψογη επικοινωνία σε κάθε βήμα.',
-    name: 'Μαρία Κ.',
-    role: 'Ιδιοκτήτρια κατοικίας, Θήβα',
+      'Εξαιρετική συνεργασία! Η δουλειά τους ήταν άψογη, με προσοχή στη λεπτομέρεια, συνέπεια και άριστη αισθητική. Παρέδωσαν το έργο στον χρόνο που συμφωνήθηκε και με άψογο αποτέλεσμα. Μια αξιόπιστη εταιρεία που συνδυάζει επαγγελματισμό και ανθρώπινη προσέγγιση — τη συστήνω ανεπιφύλακτα!',
+    name: 'Irida Lambrou',
+    rating: 5,
   },
   {
     quote:
-      'Ανέλαβαν τον επαγγελματικό μας χώρο από τη μελέτη έως το κλειδί στο χέρι. Επαγγελματισμός και προσοχή στη λεπτομέρεια.',
-    name: 'Γιώργος Π.',
-    role: 'Επιχειρηματίας, Λιβαδειά',
+      'Αξιόπιστη εταιρεία με επαγγελματική δουλειά και άριστη εξυπηρέτηση. Συνεπείς, οργανωμένοι και με πολύ καλή ποιότητα κατασκευών. Τη συστήνω ανεπιφύλακτα!',
+    name: 'Chrynthi Foyrtaka',
+    rating: 5,
   },
   {
     quote:
-      'Premium υλικά, καθαρό εργοτάξιο και συνέπεια. Θα τους εμπιστευόμουν ξανά χωρίς δεύτερη σκέψη.',
-    name: 'Ελένη Δ.',
-    role: 'Αρχιτέκτονας συνεργάτιδα',
+      'Πολύ καλή συνεργασία, το προσωπικό φιλικό, άψογη συννενόηση, και με προτεραιότητα την ικανοποίηση του πελάτη.',
+    name: 'Mairoula Roupaka',
+    rating: 5,
+  },
+  {
+    quote:
+      'Αξιοπιστία, προτάσεις για συμφέρουσες λύσεις και άψογη συνεργασία μέχρι το τέλος.',
+    name: 'Stelios Roupakas',
+    rating: 5,
+  },
+  {
+    quote: 'Μέχρι στιγμής άψογη συνεργασία, και περιμένουμε τα επόμενα!',
+    name: 'Cris Kiriazis',
+    rating: 5,
+  },
+  {
+    quote: 'Άψογη δουλειά και επαγγελματισμός!',
+    name: 'Κωστας Ντουμας',
+    rating: 5,
+  },
+  {
+    quote: 'Άψογη εξυπηρέτηση!',
+    name: 'Marios Nikitopoulos',
+    rating: 5,
   },
 ]
 

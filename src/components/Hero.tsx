@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { hero } from '../lib/content'
+import { hero, contactPath, projectsPath } from '../lib/content'
 import { photos } from '../lib/photos'
 import { ArrowRight, ArrowUpRight } from './Icons'
 
@@ -82,11 +82,11 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.7 }}
           >
-            <a href="#contact" className="btn-gold">
+            <a href={contactPath} className="btn-gold">
               {hero.ctaPrimary}
               <ArrowRight />
             </a>
-            <a href="#projects" className="btn-ghost">
+            <a href={projectsPath} className="btn-ghost">
               {hero.ctaSecondary}
               <ArrowUpRight />
             </a>

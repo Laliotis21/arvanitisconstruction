@@ -1,5 +1,6 @@
 import Logo from './Logo'
-import { company, legal, nav, services } from '../lib/content'
+import SocialLinks from './SocialLinks'
+import { company, legal, nav, services, projectsPath } from '../lib/content'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -10,9 +11,10 @@ export default function Footer() {
           <div className="md:col-span-5">
             <Logo />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-stone">
-              Σχεδιάζουμε χώρους, κατασκευάζουμε εμπιστοσύνη, παραδίδουμε ποιότητα. Θήβα, Βοιωτίας.
+              Σχεδιάζουμε χώρους, δημιουργούμε εμπιστοσύνη, παραδίδουμε ποιότητα. Θήβα, Βοιωτίας.
             </p>
             <p className="mt-6 font-display text-2xl italic text-gold">{company.taglineEn}</p>
+            <SocialLinks className="mt-8" />
           </div>
 
           <nav className="md:col-span-3" aria-label="Πλοήγηση">
@@ -54,7 +56,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-wrap gap-x-8 gap-y-2">
             <a
-              href="projects/"
+              href={projectsPath}
               className="inline-flex w-fit items-center gap-2 text-sm font-medium text-bone/90 transition-colors hover:text-gold"
             >
               Όλα τα Έργα

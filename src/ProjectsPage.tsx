@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import Logo from './components/Logo'
+import Navbar from './components/Navbar'
 import { ArrowRight, ArrowUpRight, Close } from './components/Icons'
 import { Reveal } from './components/ui/Reveal'
 import { company, legal, projects, type Project } from './lib/content'
@@ -138,23 +138,9 @@ export default function ProjectsPage() {
 
   return (
     <>
-      {/* Slim header */}
-      <header className="sticky top-0 z-50 border-b border-ink-line bg-ink/85 backdrop-blur-xl">
-        <div className="container-x flex h-[88px] items-center justify-between">
-          <Logo href="../" />
-          <a
-            href="../"
-            className="inline-flex items-center gap-2 text-sm font-medium text-stone transition-colors hover:text-gold"
-          >
-            <span aria-hidden className="rotate-180">
-              <ArrowRight />
-            </span>
-            Επιστροφή στην αρχική
-          </a>
-        </div>
-      </header>
+      <Navbar homePrefix="../" solid activePage="projects" />
 
-      <main>
+      <main className="pt-[88px]">
         {/* Hero / overview */}
         <section className="relative overflow-hidden border-b border-ink-line bg-ink-soft py-24 md:py-32">
           <div className="container-x">
@@ -273,7 +259,7 @@ export default function ProjectsPage() {
                 επόμενα βήματα.
               </p>
               <div className="mt-9 flex flex-wrap justify-center gap-4">
-                <a href="../#contact" className="btn-gold">
+                <a href="../contact/" className="btn-gold">
                   Ζητήστε προσφορά <ArrowUpRight />
                 </a>
                 <a href={`tel:${company.phoneHref}`} className="btn-ghost">
@@ -296,6 +282,9 @@ export default function ProjectsPage() {
               {company.phone}
             </a>
             <span>{company.location}</span>
+            <a href="../privacy-policy/" className="transition-colors hover:text-gold">
+              Πολιτική Απορρήτου
+            </a>
           </div>
           <p className="text-xs text-stone/70">
             © {year} {legal.entity} · Αρ. Γ.Ε.ΜΗ. {legal.gemi} · ΑΦΜ {legal.afm}

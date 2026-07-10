@@ -159,3 +159,22 @@ export function Check(props: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
+
+export function Instagram(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} width={20} height={20} {...props}>
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+export function TikTok(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} width={20} height={20} {...props}>
+      <path d="M9 6v9.5a2.5 2.5 0 1 1-2.5-2.5" />
+      <path d="M15 5.5v5.2a3.3 3.3 0 0 0 0 6.6V9.5a5.5 5.5 0 0 0 3.5 1.2V7.2A7.8 7.8 0 0 1 15 5.5Z" />
+    </svg>
+  )
+}
