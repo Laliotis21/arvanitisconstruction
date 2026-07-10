@@ -1,4 +1,4 @@
-import { about, aboutPath } from '../lib/content'
+import { about, aboutPath, founderStatement } from '../lib/content'
 import { photos } from '../lib/photos'
 import { Reveal } from './ui/Reveal'
 import { Check, ArrowUpRight } from './Icons'
@@ -9,10 +9,8 @@ export default function About() {
   return (
     <section id="about" className="relative py-28 md:py-36">
       <div className="container-x grid gap-16 lg:grid-cols-12 lg:items-center lg:gap-20">
-        {/* Left visual column */}
         <Reveal className="lg:col-span-5">
           <div className="relative">
-            {/* offset gold frame */}
             <div
               aria-hidden
               className="absolute -left-4 -top-4 hidden h-full w-full rounded-[2px] border border-gold/25 lg:block"
@@ -23,25 +21,19 @@ export default function About() {
                 alt="Νέα γραφεία Arvanitis Constructions — πρόσοψη, Θήβα"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent" />
-              <div className="absolute inset-x-8 bottom-8 flex items-end gap-6">
-                <div>
-                  <p className="font-display text-5xl gold-text">10+</p>
-                  <p className="mt-1 text-xs uppercase tracking-wide2 text-bone/80">
-                    χρόνια στην κατασκευή
-                  </p>
-                </div>
-                <div aria-hidden className="mb-1 h-12 w-px bg-bone/25" />
-                <div>
-                  <p className="font-display text-5xl gold-text">500+</p>
-                  <p className="mt-1 text-xs uppercase tracking-wide2 text-bone/80">έργα</p>
-                </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10" />
+              <div className="absolute inset-x-8 bottom-8 md:inset-x-10 md:bottom-10">
+                <p className="font-display text-xl italic leading-snug text-bone md:text-2xl">
+                  «{founderStatement.quote}»
+                </p>
+                <p className="mt-3 text-xs uppercase tracking-wide2 text-bone/75">
+                  {founderStatement.name}
+                </p>
               </div>
             </div>
           </div>
         </Reveal>
 
-        {/* Right text column */}
         <div className="lg:col-span-7">
           <Reveal>
             <p className="eyebrow">

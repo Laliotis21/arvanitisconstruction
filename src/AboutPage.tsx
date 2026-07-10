@@ -3,8 +3,9 @@ import Footer from './components/Footer'
 import { ArrowUpRight, Check } from './components/Icons'
 import { Reveal, RevealGroup, RevealItem } from './components/ui/Reveal'
 import { Counter } from './components/ui/Counter'
-import { about, company, projectsPath, stats } from './lib/content'
+import { about, company, founderManifesto, founderStatement, projectsPath, stats } from './lib/content'
 import { photos } from './lib/photos'
+import founderManifestoImg from './assets/founder-manifesto.png'
 
 const highlights = ['Premium υλικά', 'Άψογη εκτέλεση', 'Συνέπεια στον χρόνο', 'Προσοχή στη λεπτομέρεια']
 
@@ -57,38 +58,56 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Story / philosophy */}
-        <section className="border-b border-ink-line py-20 md:py-28">
-          <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <Reveal className="relative">
+        {/* Founder — authentic print at HQ */}
+        <section id="founder" className="scroll-mt-24 border-b border-ink-line py-20 md:py-28">
+          <div className="container-x grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+            <Reveal className="relative lg:sticky lg:top-28">
               <div
                 aria-hidden
                 className="absolute -left-4 -top-4 hidden h-full w-full rounded-[2px] border border-gold/25 lg:block"
               />
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] border border-ink-line bg-ink-card">
+              <figure className="relative overflow-hidden rounded-[2px] border border-ink-line bg-bone/95 p-3 shadow-card md:p-4">
                 <img
-                  src={photos.aboutVisual}
-                  alt="Νέα γραφεία Arvanitis Constructions — πρόσοψη, Θήβα"
-                  className="absolute inset-0 h-full w-full object-cover"
+                  src={founderManifestoImg}
+                  alt={about.founder.imageAlt}
+                  className="w-full object-contain"
+                  loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent" />
-              </div>
+              </figure>
             </Reveal>
 
-            <Reveal delay={0.1}>
-              <p className="eyebrow">
-                <span className="h-px w-8 bg-gold" />
-                {about.story.eyebrow}
-              </p>
-              <h2 className="heading-display mt-6 whitespace-pre-line text-3xl md:text-4xl lg:text-5xl">
-                {about.story.title}
-              </h2>
-              {about.story.body.map((p, i) => (
-                <p key={i} className="mt-5 text-[1.02rem] leading-relaxed text-stone">
-                  {p}
+            <div>
+              <Reveal>
+                <p className="eyebrow">
+                  <span className="h-px w-8 bg-gold" />
+                  {about.founder.eyebrow}
                 </p>
+                <h2 className="heading-display mt-6 text-3xl md:text-4xl lg:text-5xl">
+                  {founderManifesto.title}
+                </h2>
+              </Reveal>
+
+              {founderManifesto.body.map((p, i) => (
+                <Reveal key={i} delay={0.06 * (i + 1)}>
+                  <p className="mt-5 text-[1.02rem] leading-relaxed text-stone">{p}</p>
+                </Reveal>
               ))}
-            </Reveal>
+
+              <Reveal delay={0.35}>
+                <p className="mt-10 font-display text-xl italic leading-relaxed text-bone md:text-2xl">
+                  «{founderStatement.quote}»
+                </p>
+                <div className="mt-8 border-t border-ink-line pt-6">
+                  <p className="font-display text-lg text-bone">{founderStatement.name}</p>
+                  <p className="mt-1 text-xs uppercase tracking-wide2 text-stone">
+                    {founderStatement.role}
+                  </p>
+                  <p className="mt-3 text-xs uppercase tracking-wide2 text-stone/60">
+                    {founderManifesto.dated} · {founderManifesto.location}
+                  </p>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </section>
 
