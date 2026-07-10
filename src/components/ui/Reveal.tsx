@@ -16,7 +16,7 @@ export function Reveal({ children, className, delay = 0, y = 24 }: Props) {
       className={className}
       initial={reduce ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
@@ -31,7 +31,7 @@ export function RevealGroup({ children, className }: { children: ReactNode; clas
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, amount: 0.12 }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: 0.1 } },

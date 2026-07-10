@@ -1,31 +1,57 @@
+import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { hero, contactPath, projectsPath } from '../lib/content'
 import { ArrowRight, ArrowUpRight } from './Icons'
 
 // Drop a muted, ~8s construction/drone loop at public/hero.mp4 (h264, ~1080p, <6MB).
-// Until then the poster photo shows — no broken state.
+// Poster is always the LCP background; video is desktop-only and only if the file exists.
 const VIDEO_SRC = `${import.meta.env.BASE_URL}hero.mp4`
-// Unhashed public asset so the SEO head can <link rel="preload"> it (LCP).
 const POSTER_SRC = `${import.meta.env.BASE_URL}hero-poster.webp`
 
 export default function Hero() {
   const reduce = useReducedMotion()
+  const [enableVideo, setEnableVideo] = useState(false)
+  const [videoReady, setVideoReady] = useState(false)
+
+  useEffect(() => {
+    if (reduce) return
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    const sync = () => setEnableVideo(desktop.matches)
+    sync()
+    desktop.addEventListener('change', sync)
+    return () => desktop.removeEventListener('change', sync)
+  }, [reduce])
 
   return (
     <section id="home" className="relative flex min-h-[100svh] items-center overflow-hidden bg-ink">
-      {/* Background video (poster fallback until hero.mp4 exists) */}
-      <video
-        className="absolute inset-0 h-full w-full object-cover"
-        poster={POSTER_SRC}
-        autoPlay={!reduce}
-        loop
-        muted
-        playsInline
-        preload="metadata"
+      <img
+        src={POSTER_SRC}
+        alt=""
         aria-hidden
-      >
-        <source src={VIDEO_SRC} type="video/mp4" />
-      </video>
+        fetchPriority="high"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      {enableVideo && (
+        <video
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            videoReady ? 'opacity-100' : 'opacity-0'
+          }`}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="none"
+          aria-hidden
+          onCanPlay={() => setVideoReady(true)}
+          onError={() => {
+            setEnableVideo(false)
+            setVideoReady(false)
+          }}
+        >
+          <source src={VIDEO_SRC} type="video/mp4" />
+        </video>
+      )}
 
       {/* Legibility overlays — dark left + bottom, warm gold cast */}
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-ink/30" />
