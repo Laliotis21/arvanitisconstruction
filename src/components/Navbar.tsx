@@ -109,10 +109,11 @@ export default function Navbar({ homePrefix = '', solid = false, activePage }: P
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[60] bg-ink/98 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-[60] overflow-y-auto overscroll-contain bg-ink lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
             <div className="container-x flex h-[88px] items-center justify-between gap-4">
               <Logo href={logoHref} height={46} />
