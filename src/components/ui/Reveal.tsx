@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
+import { useMobileLite } from '../../hooks/useMobileLite'
 
 type Props = {
   children: ReactNode
@@ -11,10 +12,16 @@ type Props = {
 
 export function Reveal({ children, className, delay = 0, y = 24 }: Props) {
   const reduce = useReducedMotion()
+  const lite = useMobileLite()
+
+  if (reduce || lite) {
+    return <div className={className}>{children}</div>
+  }
+
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
+      initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -24,8 +31,14 @@ export function Reveal({ children, className, delay = 0, y = 24 }: Props) {
   )
 }
 
-// Staggered container for lists/grids
 export function RevealGroup({ children, className }: { children: ReactNode; className?: string }) {
+  const reduce = useReducedMotion()
+  const lite = useMobileLite()
+
+  if (reduce || lite) {
+    return <div className={className}>{children}</div>
+  }
+
   return (
     <motion.div
       className={className}
@@ -44,11 +57,17 @@ export function RevealGroup({ children, className }: { children: ReactNode; clas
 
 export function RevealItem({ children, className }: { children: ReactNode; className?: string }) {
   const reduce = useReducedMotion()
+  const lite = useMobileLite()
+
+  if (reduce || lite) {
+    return <div className={className}>{children}</div>
+  }
+
   return (
     <motion.div
       className={className}
       variants={{
-        hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 26 },
+        hidden: { opacity: 0, y: 26 },
         show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
       }}
     >

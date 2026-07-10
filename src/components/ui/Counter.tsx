@@ -1,12 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'framer-motion'
+import { useMobileLite } from '../../hooks/useMobileLite'
 
 export function Counter({ to, suffix = '', duration = 1800 }: { to: number; suffix?: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
-  const [value, setValue] = useState(0)
+  const lite = useMobileLite()
+  const [value, setValue] = useState(lite ? to : 0)
 
   useEffect(() => {
+    if (lite) {
+      setValue(to)
+      return
+    }
     if (!inView) return
     let raf = 0
     const start = performance.now()
@@ -18,7 +24,7 @@ export function Counter({ to, suffix = '', duration = 1800 }: { to: number; suff
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [inView, to, duration])
+  }, [inView, to, duration, lite])
 
   return (
     <span ref={ref}>

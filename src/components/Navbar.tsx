@@ -61,7 +61,7 @@ export default function Navbar({ homePrefix = '', solid = false, activePage }: P
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           showSolid
-            ? 'border-b border-ink-line/70 bg-ink/85 backdrop-blur-xl'
+            ? 'border-b border-ink-line/70 bg-ink/95 max-md:backdrop-blur-none md:bg-ink/85 md:backdrop-blur-xl'
             : 'border-b border-transparent bg-transparent'
         }`}
       >

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { googleReviews, testimonials, type Testimonial } from '../lib/content'
 import { useInfiniteScroll } from '../hooks/useInfiniteScroll'
+import { useMobileLite } from '../hooks/useMobileLite'
 import { Quote, ArrowUpRight } from './Icons'
 import { Reveal } from './ui/Reveal'
 
@@ -36,9 +37,10 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 }
 
 function AutoScrollTrack() {
+  const lite = useMobileLite()
   const { reduce, loopRef, controls } = useInfiniteScroll(LOOP_SECONDS)
 
-  if (reduce) {
+  if (reduce || lite) {
     return (
       <div className="container-x mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {testimonials.map((t) => (
