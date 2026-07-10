@@ -25,6 +25,11 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     cssCodeSplit: true,
     rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('framer-motion')) return 'motion'
+        },
+      },
       input: {
         main: resolve(process.cwd(), 'index.html'),
         ...Object.fromEntries(

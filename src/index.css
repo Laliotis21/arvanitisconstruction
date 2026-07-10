@@ -1,17 +1,8 @@
-/* Self-hosted fonts (GDPR: no request to Google Fonts CDN).
-   Cormorant Garamond has no Greek subset — Greek display text falls back to
-   Georgia/serif, same as it did on the CDN. Manrope covers Greek. */
-@import '@fontsource/cormorant-garamond/400.css';
-@import '@fontsource/cormorant-garamond/400-italic.css';
-@import '@fontsource/cormorant-garamond/500.css';
-@import '@fontsource/cormorant-garamond/600.css';
-@import '@fontsource/cormorant-garamond/700.css';
-@import '@fontsource/manrope/300.css';
-@import '@fontsource/manrope/400.css';
-@import '@fontsource/manrope/500.css';
-@import '@fontsource/manrope/600.css';
-@import '@fontsource/manrope/700.css';
-@import '@fontsource/manrope/800.css';
+/* Self-hosted variable fonts (GDPR) — 2 files instead of 10 for faster mobile load.
+   Cormorant has no Greek; display Greek falls back to Georgia. Manrope covers Greek. */
+@import '@fontsource-variable/manrope/wght.css';
+@import '@fontsource-variable/cormorant-garamond/wght.css';
+@import '@fontsource-variable/cormorant-garamond/wght-italic.css';
 
 @tailwind base;
 @tailwind components;

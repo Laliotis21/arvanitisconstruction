@@ -20,8 +20,8 @@ export default {
         stone: '#A7A29A',
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        display: ['"Cormorant Garamond Variable"', 'Georgia', 'serif'],
+        sans: ['"Manrope Variable"', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         brand: '0.42em',
