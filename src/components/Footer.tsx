@@ -101,7 +101,7 @@ export default function Footer({ homePrefix = '' }: Props) {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-ink-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-stone/70">
-            © {year} {legal.entity} — Με επιφύλαξη παντός δικαιώματος.
+            © {year} {company.name} — Με επιφύλαξη παντός δικαιώματος.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone">
             <a

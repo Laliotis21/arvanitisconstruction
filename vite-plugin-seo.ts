@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite'
 import { dirname, relative } from 'node:path'
-import { renderSeoHead, renderSitemap, resolvePageKey } from './src/lib/seo'
+import { renderLlmsTxt, renderSeoHead, renderSitemap, resolvePageKey } from './src/lib/seo'
 
 const SEO_MARKER = '<!-- seo -->'
 
@@ -22,6 +22,11 @@ export function seoPlugin(): Plugin {
         type: 'asset',
         fileName: 'sitemap.xml',
         source: renderSitemap(new Date().toISOString().slice(0, 10)),
+      })
+      this.emitFile({
+        type: 'asset',
+        fileName: 'llms.txt',
+        source: renderLlmsTxt(),
       })
     },
     transformIndexHtml: {

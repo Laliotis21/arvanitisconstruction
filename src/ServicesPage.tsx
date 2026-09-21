@@ -2,6 +2,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import PageHero from './components/PageHero'
 import ClosingCTA from './components/ClosingCTA'
+import Faq from './components/Faq'
 import { ServiceIcon, ArrowUpRight, Check } from './components/Icons'
 import { Reveal, RevealItem } from './components/ui/Reveal'
 import { services, servicesPage } from './lib/content'
@@ -23,7 +24,7 @@ export default function ServicesPage() {
           badges={[
             ['5', 'εξειδικεύσεις'],
             ['Μελέτη →', 'παράδοση'],
-            ['Turnkey', 'λύσεις'],
+            ['Κλειδί', 'στο χέρι'],
           ]}
         >
           {services.map((s) => (
@@ -106,6 +107,8 @@ export default function ServicesPage() {
             </section>
           )
         })}
+
+        <Faq />
 
         {/* Closing CTA */}
         <ClosingCTA

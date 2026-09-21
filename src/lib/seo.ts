@@ -1,4 +1,4 @@
-import { company, googleReviews, legal, process, projects, services, social } from './content'
+import { company, faqs, googleReviews, legal, process, projects, services, social, testimonials } from './content'
 
 export const SITE_URL = 'https://www.arvanitisconstruction.gr'
 export const SITE_NAME = 'Arvanitis Constructions'
@@ -9,6 +9,7 @@ export const LOCALE = 'el_GR'
 
 const ORG_ID = `${SITE_URL}/#organization`
 const WEBSITE_ID = `${SITE_URL}/#website`
+const BUILD_DATE = new Date().toISOString().slice(0, 10)
 
 export type SeoPageKey =
   | 'main'
@@ -54,7 +55,7 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
     breadcrumb: 'Η Εταιρεία',
     title: 'Η Εταιρεία | Arvanitis Constructions — 10+ Χρόνια Κατασκευών Θήβα',
     description:
-      'Γνωρίστε την ARVANITIS CONSTRUCTION Ι.Κ.Ε. — 10+ χρόνια εμπειρίας, 500+ ολοκληρωμένα έργα, έδρα Θήβα Βοιωτίας. Φιλοσοφία, αξίες & διαδικασία εργασίας.',
+      'Γνωρίστε την Arvanitis Constructions — 10+ χρόνια εμπειρίας, 500+ ολοκληρωμένα έργα, έδρα Θήβα Βοιωτίας. Φιλοσοφία, αξίες & διαδικασία εργασίας.',
     keywords:
       'Arvanitis Constructions εταιρεία, κατασκευαστική Θήβα, ιστορία κατασκευών Βοιωτία, κατασκευαστική εταιρεία Κεντρική Ελλάδα',
   },
@@ -64,9 +65,9 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
     breadcrumb: 'Υπηρεσίες',
     title: 'Υπηρεσίες Κατασκευής & Ανακαίνισης | Arvanitis Constructions Θήβα',
     description:
-      'Κατασκευές κατοικιών, ανακαινίσεις, επαγγελματικοί χώροι, αρχιτεκτονική μελέτη & 3D σχεδιασμός, ολοκληρωμένες λύσεις turnkey στη Θήβα & Βοιωτία.',
+      'Κατασκευές κατοικιών, ανακαινίσεις, επαγγελματικοί χώροι, αρχιτεκτονική μελέτη & 3D σχεδιασμός, ολοκληρωμένα έργα με το κλειδί στο χέρι στη Θήβα & Βοιωτία.',
     keywords:
-      'υπηρεσίες κατασκευής, ανακαίνιση σπιτιού Θήβα, επαγγελματικοί χώροι Βοιωτία, αρχιτεκτονική μελέτη, 3D σχεδιασμός, turnkey κατασκευή',
+      'υπηρεσίες κατασκευής, ανακαίνιση σπιτιού Θήβα, επαγγελματικοί χώροι Βοιωτία, αρχιτεκτονική μελέτη, 3D σχεδιασμός, κατασκευή με το κλειδί στο χέρι',
   },
   projects: {
     path: '/projects/',
@@ -104,8 +105,8 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
     breadcrumb: 'Οικονομικά Στοιχεία',
     title: 'Οικονομικά Στοιχεία & Ισολογισμοί | Arvanitis Constructions',
     description:
-      'Δημοσιευμένες οικονομικές καταστάσεις & ισολογισμοί της ARVANITIS CONSTRUCTION Ι.Κ.Ε. (Γ.Ε.ΜΗ. 190616217000) σύμφωνα με τις υποχρεώσεις δημοσιότητας.',
-    keywords: 'οικονομικά στοιχεία Arvanitis Constructions, ισολογισμός ΓΕΜΗ, ARVANITIS CONSTRUCTION ΙΚΕ',
+      'Δημοσιευμένες οικονομικές καταστάσεις & ισολογισμοί της Arvanitis Constructions σύμφωνα με τις υποχρεώσεις δημοσιότητας του Γ.Ε.ΜΗ.',
+    keywords: 'οικονομικά στοιχεία Arvanitis Constructions, ισολογισμός ΓΕΜΗ, κατασκευαστική εταιρεία Θήβα',
   },
   privacy: {
     path: '/privacy-policy/',
@@ -114,7 +115,7 @@ export const seoPages: Record<SeoPageKey, SeoPage> = {
     breadcrumb: 'Πολιτική Απορρήτου',
     title: 'Πολιτική Απορρήτου & GDPR | Arvanitis Constructions',
     description:
-      'Πώς η ARVANITIS CONSTRUCTION Ι.Κ.Ε. συλλέγει, επεξεργάζεται και προστατεύει τα προσωπικά σας δεδομένα σύμφωνα με τον GDPR και την ελληνική νομοθεσία.',
+      'Πώς η Arvanitis Constructions συλλέγει, επεξεργάζεται και προστατεύει τα προσωπικά σας δεδομένα σύμφωνα με τον GDPR και την ελληνική νομοθεσία.',
     keywords: 'πολιτική απορρήτου, GDPR, προστασία δεδομένων, cookies Arvanitis Constructions',
   },
 }
@@ -125,7 +126,13 @@ const organizationSchema = {
   name: SITE_NAME,
   legalName: legal.entity,
   url: SITE_URL,
-  logo: `${SITE_URL}/arvanitis-logo.png`,
+  // Square variant: Google rejects the wide wordmark for the search favicon.
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/favicon-512.png`,
+    width: 512,
+    height: 512,
+  },
   image: OG_IMAGE,
   email: company.email,
   telephone: company.phoneHref,
@@ -152,9 +159,37 @@ const organizationSchema = {
   hasMap: company.mapsPlaceUrl,
   slogan: company.taglineEn,
   description: seoPages.main.description,
+  // Disambiguates this company from the unrelated "Arvanitis Constructions" shipping firms in Piraeus.
+  foundingDate: '2015',
+  foundingLocation: { '@type': 'Place', name: 'Θήβα, Βοιωτία, Ελλάδα' },
+  founder: { '@type': 'Person', name: 'Νικόλαος Αρβανίτης' },
+  knowsLanguage: ['el', 'en'],
+  priceRange: '€€',
+  currenciesAccepted: 'EUR',
+  paymentAccepted: 'Μετρητά, Τραπεζική κατάθεση, Πιστωτική κάρτα',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:30',
+      closes: '21:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '09:00',
+      closes: '14:00',
+    },
+  ],
   areaServed: [
     { '@type': 'City', name: 'Θήβα' },
+    { '@type': 'City', name: 'Λιβαδειά' },
+    { '@type': 'City', name: 'Σχηματάρι' },
+    { '@type': 'City', name: 'Οινόφυτα' },
+    { '@type': 'City', name: 'Χαλκίδα' },
     { '@type': 'AdministrativeArea', name: 'Βοιωτία' },
+    { '@type': 'AdministrativeArea', name: 'Εύβοια' },
+    { '@type': 'AdministrativeArea', name: 'Αττική' },
     { '@type': 'AdministrativeArea', name: 'Στερεά Ελλάδα' },
     { '@type': 'Country', name: 'Ελλάδα' },
   ],
@@ -166,6 +201,18 @@ const organizationSchema = {
     bestRating: '5',
     worstRating: '1',
   },
+  review: testimonials.map((t) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: t.name },
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: String(t.rating),
+      bestRating: '5',
+      worstRating: '1',
+    },
+    reviewBody: t.quote,
+    publisher: { '@type': 'Organization', name: 'Google' },
+  })),
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Υπηρεσίες κατασκευής & ανακαίνισης',
@@ -175,10 +222,20 @@ const organizationSchema = {
       itemOffered: {
         '@type': 'Service',
         name: s.title,
-        description: s.desc,
+        description: s.long.join(' '),
         url: `${SITE_URL}/services/#${s.id}`,
+        serviceType: s.title,
         provider: { '@id': ORG_ID },
-        areaServed: 'GR',
+        areaServed: { '@type': 'AdministrativeArea', name: 'Βοιωτία, Εύβοια, Αττική' },
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: `${s.title} — τι περιλαμβάνει`,
+          itemListElement: s.includes.map((item, j) => ({
+            '@type': 'Offer',
+            position: j + 1,
+            itemOffered: { '@type': 'Service', name: item },
+          })),
+        },
       },
     })),
   },
@@ -209,7 +266,19 @@ function webPageSchema(page: SeoPage) {
     inLanguage: LOCALE,
     isPartOf: { '@id': WEBSITE_ID },
     about: { '@id': ORG_ID },
+    dateModified: BUILD_DATE,
+    primaryImageOfPage: { '@type': 'ImageObject', url: OG_IMAGE },
   }
+}
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  '@id': `${SITE_URL}/#faq`,
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
 }
 
 function breadcrumbSchema(page: SeoPage) {
@@ -239,6 +308,11 @@ function pageJsonLd(key: SeoPageKey) {
 
   const crumbs = breadcrumbSchema(page)
   if (crumbs) graph.push(crumbs)
+
+  // Only the pages that actually render the FAQ may declare it, per Google's policy.
+  if (key === 'services' || key === 'contact') {
+    graph.push(faqSchema)
+  }
 
   if (key === 'services') {
     graph.push({
@@ -333,6 +407,79 @@ ${urls.join('\n')}
 `
 }
 
+/**
+ * llms.txt — the emerging convention for giving LLM crawlers a clean,
+ * markdown summary of the site instead of making them parse the SPA.
+ */
+export function renderLlmsTxt(): string {
+  const serviceLines = services
+    .map((s) => `- [${s.title}](${SITE_URL}/services/#${s.id}): ${s.desc}`)
+    .join('\n')
+
+  const faqLines = faqs.map((f) => `### ${f.q}\n${f.a}`).join('\n\n')
+
+  const projectLines = projects
+    .map((p) => `- ${p.title} — ${p.category}, ${p.location}, ${p.year}. ${p.desc}`)
+    .join('\n')
+
+  const processLines = process
+    .map((step) => `${step.n}. **${step.title}** — ${step.desc}`)
+    .join('\n')
+
+  return `# ${SITE_NAME}
+
+> Κατασκευαστική εταιρεία με έδρα τη Θήβα Βοιωτίας. Αναλαμβάνουμε νέες κατασκευές,
+> ανακαινίσεις κατοικιών και επαγγελματικών χώρων, αρχιτεκτονική μελέτη με 3D σχεδιασμό
+> και ολοκληρωμένα έργα «με το κλειδί στο χέρι» (turnkey) σε Βοιωτία, Εύβοια και Αττική.
+
+## Στοιχεία επιχείρησης
+
+- **Ονομασία:** ${SITE_NAME}
+- **Έδρα:** ${legal.seat}
+- **Τηλέφωνο:** ${company.phoneHref}
+- **Email:** ${company.email}
+- **Ιστότοπος:** ${SITE_URL}
+- **Google Maps:** ${company.mapsPlaceUrl}
+- **Αξιολόγηση Google:** ${googleReviews.rating}/5 από ${googleReviews.count} κριτικές
+- **Εμπειρία:** 10+ χρόνια, 500+ ολοκληρωμένα έργα
+- **Ωράριο:** Δευτέρα–Παρασκευή 08:30–21:00, Σάββατο 09:00–14:00
+- **Γλώσσες:** Ελληνικά, Αγγλικά
+
+Σημείωση ταυτοποίησης: η εταιρεία αυτή δραστηριοποιείται σε οικοδομικά έργα στη Βοιωτία
+και δεν σχετίζεται με ομώνυμες ναυπηγικές/ναυτιλιακές εταιρείες στον Πειραιά.
+
+## Περιοχές εξυπηρέτησης
+
+Θήβα, Λιβαδειά, Σχηματάρι, Οινόφυτα, Αλίαρτος, Χαλκίδα, Βοιωτία, Εύβοια, Αττική.
+
+## Υπηρεσίες
+
+${serviceLines}
+
+## Διαδικασία εργασίας
+
+${processLines}
+
+## Ενδεικτικά έργα
+
+${projectLines}
+
+## Συχνές ερωτήσεις
+
+${faqLines}
+
+## Σελίδες
+
+${Object.values(seoPages)
+  .map((p) => `- [${p.breadcrumb ?? 'Αρχική'}](${pageUrl(p.path)}): ${p.description}`)
+  .join('\n')}
+
+## Επικοινωνία
+
+Για προσφορά: ${SITE_URL}/contact/ — απάντηση εντός 24 ωρών, δωρεάν αυτοψία, χωρίς δέσμευση.
+`
+}
+
 /** `filename` is the html path relative to the project root, e.g. `about/index.html`. */
 export function resolvePageKey(filename: string): SeoPageKey | null {
   const p = `/${filename.replace(/\\/g, '/')}`
@@ -391,9 +538,10 @@ export function renderSeoHead(pageKey: SeoPageKey, assetPrefix: string): string 
     <meta name="twitter:description" content="${escapeHtml(page.description)}" />
     <meta name="twitter:image" content="${OG_IMAGE}" />
 
-    <link rel="icon" type="image/png" href="${assetPrefix}arvanitis-logo.png" />
     <link rel="icon" type="image/svg+xml" href="${assetPrefix}favicon.svg" />
-    <link rel="apple-touch-icon" href="${assetPrefix}arvanitis-logo.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="${assetPrefix}icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="${assetPrefix}favicon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="${assetPrefix}apple-touch-icon.png" />
 
     <script type="application/ld+json">${jsonLd}</script>`
 }
